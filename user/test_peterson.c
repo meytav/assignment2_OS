@@ -24,7 +24,7 @@ main(void)
       exit(1);
     }
 
-    // 🔒 קטע קריטי
+  
     if (role == 0)
       printf("Parent process in critical section\n");
     else
@@ -37,7 +37,7 @@ main(void)
   }
 
   if (fork_ret > 0) {
-    wait(0); // מחכים לילד
+    wait(0);
     printf("Parent process destroying lock\n");
 
     if (peterson_destroy(lock_id) < 0) {
