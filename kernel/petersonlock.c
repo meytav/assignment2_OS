@@ -53,12 +53,13 @@ peterson_acquire(int lock_id, int role)
   // We don't need test_and_set here, just assign with a barrier
   peterson_locks[lock_id].turn = 1 - role;
 
-  __sync_synchronize();
-
+  
   while (peterson_locks[lock_id].flag[1 - role] && peterson_locks[lock_id].turn == (1 - role))
   {
     yield();
   }
+  
+  __sync_synchronize();
 
   return 0;
 }

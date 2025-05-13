@@ -38,9 +38,9 @@ createLocks(int processes)
 }
 
 
-// calculates number of 1' bits, for n = 2^k, log(n) = pop_cnt(n-1)
-// Divide and conquer, can be done in-place
-// based on the book "Hackers delight" by Henry S. Warren, Jr. 
+// Calculates number of 1' bits, for n = 2^k, log_2(n) = pop_cnt(n-1) = k.
+// Divide and conquer, can be done in-place.
+// Based on the book "Hackers delight" by Henry S. Warren, Jr. 
 int
 pop_cnt(int processes)
 {
@@ -81,7 +81,7 @@ tournament_create(int processes)
     }
     else if (pid == 0)
     {
-      processID = i; // Child process gets ID i (0 to processes-1)
+      processID = i; // Child process gets ID i (0 to processes)
       return processID;
     }
   }

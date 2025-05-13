@@ -1,7 +1,7 @@
 #include "user.h"
 
 int main(int argc, char *argv[]) {
-    const int processes = 32;
+    const int processes = 16;
     int tid = tournament_create(processes);
     if (tid == -1) {
         // Parent process or error
