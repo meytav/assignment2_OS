@@ -98,7 +98,7 @@ sys_uptime(void)
 uint64
 sys_peterson_create(void)
 {
-  printf("syscall: sys_peterson_create\n");
+  //printf("syscall: sys_peterson_create\n");
 
   return peterson_create();
 }

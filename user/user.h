@@ -27,9 +27,6 @@ int peterson_create(void);
 int peterson_acquire(int lock_id, int role);
 int peterson_release(int lock_id, int role);
 int peterson_destroy(int lock_id);
-int tournament_create(int processes);
-int tournament_acquire(void);
-int tournament_release(void);
 
 
 // ulib.c
@@ -49,3 +46,8 @@ int atoi(const char*);
 int memcmp(const void *, const void *, uint);
 void *memcpy(void *, const void *, uint);
 
+// libtournament.c
+int tournament_create(int processes);
+int tournament_acquire(void);
+int tournament_release(void);
+void tournament_destroy(int processes);

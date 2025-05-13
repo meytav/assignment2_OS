@@ -26,9 +26,9 @@ petersonlocksinit(void)
 int
 peterson_create(void)
 {
-  printf("im here");
+  //printf("im here\n");
   for (int i = 0; i < MAX_PETERSON_LOCKS; i++) {
-    printf("Checking lock %d: active=%d\n", i, peterson_locks[i].active);
+    //printf("Checking lock %d: active=%d\n", i, peterson_locks[i].active);
     if (peterson_locks[i].active == 0) {  
       peterson_locks[i].flag[0] = 0;
       peterson_locks[i].flag[1] = 0;

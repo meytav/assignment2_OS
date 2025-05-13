@@ -4,7 +4,8 @@ int main(int argc, char *argv[]) {
     int tid = tournament_create(16);
     if (tid == -1) {
         // Parent process or error
-        wait(0); // Wait for children to exit
+        while (wait(0) > 0) {}
+        tournament_destroy(16);
         exit(0);
     }
 
