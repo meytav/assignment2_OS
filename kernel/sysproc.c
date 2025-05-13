@@ -91,9 +91,6 @@ sys_uptime(void)
   return xticks;
 }
 
-#include "petersonlock.h"
-#include "defs.h"
-#include "param.h"
 
 uint64
 sys_peterson_create(void)
@@ -128,3 +125,4 @@ sys_peterson_destroy(void)
   argint(0, &lock_id);
   return peterson_destroy(lock_id);
 }
+

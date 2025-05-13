@@ -1,11 +1,12 @@
 #include "user.h"
 
 int main(int argc, char *argv[]) {
-    int tid = tournament_create(16);
+    const int processes = 32;
+    int tid = tournament_create(processes);
     if (tid == -1) {
         // Parent process or error
         while (wait(0) > 0) {}
-        tournament_destroy(16);
+        tournament_destroy(processes);
         exit(0);
     }
 

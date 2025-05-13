@@ -1,5 +1,5 @@
-#define MAX_PROCESSES 16
-#define MAX_LOCKS 15
+#define MAX_PROCESSES 64
+#define MAX_LOCKS 63
 
 #include "user.h"
 
@@ -39,6 +39,7 @@ createLocks(int processes)
 
 
 // calculates number of 1' bits, for n = 2^k, log(n) = pop_cnt(n-1)
+// Divide and conquer, can be done in-place
 // based on the book "Hackers delight" by Henry S. Warren, Jr. 
 int
 pop_cnt(int processes)
@@ -121,6 +122,10 @@ tournament_destroy(int processes)
 {
   for (int i = 0; i < processes - 1; i++)
   {
-    peterson_destroy(i);
+    if (peterson_destroy(i) < 0)
+    {
+      printf("Failed to destroy tornument");
+      exit(1);
+    }
   }
 }
