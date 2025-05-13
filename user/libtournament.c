@@ -5,8 +5,6 @@
 
 int processID = -1; // Parent doesn't participate in the tournament
 int levels;
-int locks[MAX_LOCKS];
-int processes_total;
 
 // Helper functions to calculate role and lock index for each level
 int 
@@ -35,9 +33,23 @@ createLocks(int processes)
       tournament_destroy(i);
       return -1;
     }
-    locks[i] = lock_id;
   }
   return 0;
+}
+
+
+// calculates number of 1' bits, for n = 2^k, log(n) = pop_cnt(n-1)
+// based on the book "Hackers delight" by Henry S. Warren, Jr. 
+int
+pop_cnt(int processes)
+{
+  int n = (uint) processes;
+  n = n - ((n >> 1) & 0x55555555);
+  n = (n & 0x33333333) + ((n >> 2) & 0x33333333);
+  n = (n + (n >> 4)) & 0x0F0F0F0F;
+  n = n + (n >> 8);
+  n = n + (n >> 16);
+  return (n & 0x0000003F);
 }
 
 int 
@@ -49,21 +61,13 @@ tournament_create(int processes)
     return -1;
   }
 
-  // Calculate levels based on number of processes (log2)
-  processes_total = processes;
-  levels = 0;
-  int temp = processes;
-  while (temp > 1)
-  {
-    levels++;
-    temp /= 2;
-  }
-
   // Create the Peterson locks
   if (createLocks(processes) < 0)
   {
     return -1;
   }
+
+  levels = pop_cnt(processes - 1);
 
   // Fork processes and assign IDs - create all N processes (not N-1)
   for (int i = 0; i < processes; i++)
@@ -71,7 +75,7 @@ tournament_create(int processes)
     int pid = fork();
     if (pid < 0)
     {
-      tournament_destroy(i);
+      tournament_destroy(processes);
       return -1; // Failed to fork
     }
     else if (pid == 0)
@@ -81,7 +85,7 @@ tournament_create(int processes)
     }
   }
 
-  return processID; // Parent returns -1 (doesn't participate)
+  return processID; // Parent returns -1 (parent doesn't participate)
 }
 
 int 
@@ -117,6 +121,6 @@ tournament_destroy(int processes)
 {
   for (int i = 0; i < processes - 1; i++)
   {
-    peterson_destroy(locks[i]);
+    peterson_destroy(i);
   }
 }
