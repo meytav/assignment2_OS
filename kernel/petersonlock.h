@@ -1,7 +1,7 @@
 #ifndef PETERSONLOCK_H
 #define PETERSONLOCK_H
 
-#define MAX_PETERSON_LOCKS 15
+#define MAX_PETERSON_LOCKS (NPROC - 1)
 
 struct peterson_lock {
   int flag[2];    
